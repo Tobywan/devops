@@ -1,0 +1,10 @@
+---
+
+# Sets up Docker on remote machines
+
+- hosts: "tag_role_webserver"
+  become: True
+  become_user: root
+  become_method: sudo
+  roles:
+    - docker
