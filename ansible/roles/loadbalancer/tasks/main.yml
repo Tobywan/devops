@@ -1,5 +1,5 @@
 ---
-# roles/docker/tasks/main.yml
+# roles/loadbalancer/tasks/main.yml
 - name: Install python setuptools and docker
   yum:
     name: "{{ item }}"
@@ -22,3 +22,17 @@
     state: latest
   with_items:
     - docker-py
+
+- name: Pull loadbalancer image
+  docker_image:
+    name: tobyosul/lbnginx
+
+- name : (Re)start loadbalaner container
+  docker_container:
+    name: lbnginx
+    image: tobyosul/lbnginx
+    state: started
+    restart: yes
+    ports:
+    - "8080:80"
+
